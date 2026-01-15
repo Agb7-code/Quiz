@@ -1,0 +1,225 @@
+
+
+import React, { useState } from ‘react’;
+import { CheckCircle, XCircle, RotateCcw } from ‘lucide-react’;
+
+const ArabicQuiz = () => {
+const questions = [
+{
+id: 1,
+text: “وَقَفَتْنَا عَلَى الْفِرَاقِ لَيَالٍ لِنَرَى مِنْ فُؤَادِهَا _____ سِرِّهْ”,
+options: [“كُنْهَ”, “صَفْوَ”, “حُبَّ”, “نُورَ”],
+correct: 0
+},
+{
+id: 2,
+text: “تَدَاعَى بِمَا طَالَتْ وَشَطَّتْ فُؤَادُهُ وَأَقْصَرَ عَنْ _____ فَضْلُ أَنَاتِهِ”,
+options: [“حُبِّهِ”, “سَلْوَاهُ”, “هَوَاهُ”, “دُنْيَاهُ”],
+correct: 1
+},
+{
+id: 3,
+text: “من يعذلِ الدّنيا يجدْ أنّها _____ منها قبْلَ أن يعذلا”,
+options: [“أَصْغَرُ”, “أَحْقَرُ”, “أَكْبَرُ”, “أَجْمَلُ”],
+correct: 1
+},
+{
+id: 4,
+text: “أيحسب ألن يسألَ الله قاضيًا ويبعثَ من يفنى وتبلى _____”,
+options: [“أَجْسَامُهُ”, “عِظَامُهُ”, “حَيَاتُهُ”, “أَيَّامُهُ”],
+correct: 1
+},
+{
+id: 5,
+text: “إني لأنظرُ أعضائي مقسمةً على صفائح فوق الأرض _____”,
+options: [“مُتَفَرِّقَاتِ”, “أَشْتَاتِ”, “مُبَعْثَرَاتِ”, “مُنْتَشِرَاتِ”],
+correct: 1
+},
+{
+id: 6,
+text: “تلك أيّامنا لديكِ اسأليها هل رأتْنا _____ القوم فيها”,
+options: [“نُقَاتِلُ”, “نُزَاحِمُ”, “نُجَارِي”, “نُسَابِقُ”],
+correct: 1
+},
+{
+id: 7,
+text: “فاقتفوا فينا سيرةً ألفوها كلُّ من له سيرةٌ _____”,
+options: [“يَتْبَعُهَا”, “يَقْتَفِيهَا”, “يَحْفَظُهَا”, “يَرْوِيهَا”],
+correct: 1
+},
+{
+id: 8,
+text: “إنّما زمرةُ اللّذائذ وجهٌ يتلوّى لكي _____ قُبْحهْ”,
+options: [“يُظْهِرَ”, “يُخْفِيَ”, “يُوَارِيَ”, “يَكْشِفَ”],
+correct: 2
+},
+{
+id: 9,
+text: “إلى البين مجموعٌ رحالي وهمّتي فإلّا أسرْ لا _____ ليَ جنّتي”,
+options: [“بُنِيَتْ”, “عُمِّرَتْ”, “فُتِحَتْ”, “أُعِدَّتْ”],
+correct: 1
+},
+{
+id: 10,
+text: “خضنا لأجلك رحلةً محمومةً لا ميل ثمَّ عن السّبيل _____”,
+options: [“الطَّوِيلِ”, “الضَّيِّقِ”, “الصَّعْبِ”, “المُسْتَقِيمِ”],
+correct: 1
+}
+];
+
+const [currentQuestion, setCurrentQuestion] = useState(0);
+const [selectedAnswers, setSelectedAnswers] = useState(Array(questions.length).fill(null));
+const [showResults, setShowResults] = useState(false);
+
+const handleAnswer = (optionIndex) => {
+const newAnswers = […selectedAnswers];
+newAnswers[currentQuestion] = optionIndex;
+setSelectedAnswers(newAnswers);
+};
+
+const handleNext = () => {
+if (currentQuestion < questions.length - 1) {
+setCurrentQuestion(currentQuestion + 1);
+} else {
+setShowResults(true);
+}
+};
+
+const handlePrevious = () => {
+if (currentQuestion > 0) {
+setCurrentQuestion(currentQuestion - 1);
+}
+};
+
+const handleRestart = () => {
+setCurrentQuestion(0);
+setSelectedAnswers(Array(questions.length).fill(null));
+setShowResults(false);
+};
+
+const calculateScore = () => {
+return selectedAnswers.reduce((score, answer, index) => {
+return score + (answer === questions[index].correct ? 1 : 0);
+}, 0);
+};
+
+if (showResults) {
+const score = calculateScore();
+return (
+<div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 p-6 flex items-center justify-center" dir="rtl">
+<div className="bg-white rounded-2xl shadow-2xl p-8 max-w-2xl w-full">
+<h1 className="text-3xl font-bold text-center mb-2 text-indigo-900">اختبار قصير في أبيات عبدالله الغريبي</h1>
+<h2 className="text-2xl font-bold text-center mb-6 text-indigo-700">النتائج النهائية</h2>
+<div className="text-center mb-8">
+<div className="text-6xl font-bold text-indigo-600 mb-2">{score} / {questions.length}</div>
+<p className="text-xl text-gray-600">
+{score === questions.length ? “ممتاز! إجابات صحيحة بالكامل! 🎉” :
+score >= 7 ? “أحسنت! أداء رائع! 👏” :
+score >= 5 ? “جيد جداً! استمر في التعلم! 📚” :
+“حاول مرة أخرى! 💪”}
+</p>
+</div>
+
+```
+      <div className="space-y-4 mb-6">
+        {questions.map((q, index) => (
+          <div key={q.id} className="border rounded-lg p-4 bg-gray-50">
+            <p className="font-semibold mb-2 text-lg">{q.text}</p>
+            <div className="flex items-center gap-2">
+              {selectedAnswers[index] === q.correct ? (
+                <CheckCircle className="text-green-500" size={20} />
+              ) : (
+                <XCircle className="text-red-500" size={20} />
+              )}
+              <span className={selectedAnswers[index] === q.correct ? "text-green-700" : "text-red-700"}>
+                إجابتك: {q.options[selectedAnswers[index]]}
+              </span>
+              {selectedAnswers[index] !== q.correct && (
+                <span className="text-green-700 mr-4">
+                  (الإجابة الصحيحة: {q.options[q.correct]})
+                </span>
+              )}
+            </div>
+          </div>
+        ))}
+      </div>
+
+      <button
+        onClick={handleRestart}
+        className="w-full bg-indigo-600 text-white py-3 px-6 rounded-lg hover:bg-indigo-700 transition-colors flex items-center justify-center gap-2 text-lg font-semibold"
+      >
+        <RotateCcw size={20} />
+        ابدأ من جديد
+      </button>
+    </div>
+  </div>
+);
+```
+
+}
+
+const question = questions[currentQuestion];
+const progress = ((currentQuestion + 1) / questions.length) * 100;
+
+return (
+<div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 p-6 flex items-center justify-center" dir="rtl">
+<div className="bg-white rounded-2xl shadow-2xl p-8 max-w-2xl w-full">
+<h1 className="text-3xl font-bold text-center mb-6 text-indigo-900">اختبار قصير في أبيات عبدالله الغريبي</h1>
+<div className="mb-6">
+<div className="flex justify-between items-center mb-2">
+<span className="text-sm font-semibold text-gray-600">السؤال {currentQuestion + 1} من {questions.length}</span>
+<span className="text-sm font-semibold text-indigo-600">{Math.round(progress)}%</span>
+</div>
+<div className="w-full bg-gray-200 rounded-full h-2">
+<div
+className=“bg-indigo-600 h-2 rounded-full transition-all duration-300”
+style={{ width: `${progress}%` }}
+></div>
+</div>
+</div>
+
+```
+    <h2 className="text-2xl font-bold text-gray-800 mb-6 leading-relaxed">
+      {question.text}
+    </h2>
+
+    <div className="space-y-3 mb-8">
+      {question.options.map((option, index) => (
+        <button
+          key={index}
+          onClick={() => handleAnswer(index)}
+          className={`w-full text-right p-4 rounded-lg border-2 transition-all text-lg ${
+            selectedAnswers[currentQuestion] === index
+              ? 'border-indigo-600 bg-indigo-50 text-indigo-900 font-semibold'
+              : 'border-gray-300 bg-white hover:border-indigo-400 hover:bg-indigo-50'
+          }`}
+        >
+          {option}
+        </button>
+      ))}
+    </div>
+
+    <div className="flex gap-3">
+      <button
+        onClick={handlePrevious}
+        disabled={currentQuestion === 0}
+        className="flex-1 bg-gray-300 text-gray-700 py-3 px-6 rounded-lg hover:bg-gray-400 transition-colors disabled:opacity-50 disabled:cursor-not-allowed font-semibold"
+      >
+        السابق
+      </button>
+      <button
+        onClick={handleNext}
+        disabled={selectedAnswers[currentQuestion] === null}
+        className="flex-1 bg-indigo-600 text-white py-3 px-6 rounded-lg hover:bg-indigo-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed font-semibold"
+      >
+        {currentQuestion === questions.length - 1 ? 'إنهاء الاختبار' : 'التالي'}
+      </button>
+    </div>
+  </div>
+</div>
+```
+
+);
+};
+
+export default ArabicQuiz;
